@@ -17,7 +17,6 @@ Adafruit invests time and resources providing this open source code, please supp
 
 
 Version 1.5.1 (new geo-timestamp features)
-
 =================
 
 • Analog sensor values are written to an array while PinIOViewController is active.
