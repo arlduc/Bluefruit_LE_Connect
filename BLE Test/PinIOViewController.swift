@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 protocol PinIOViewControllerDelegate: HelpViewControllerDelegate {
     
@@ -16,7 +17,7 @@ protocol PinIOViewControllerDelegate: HelpViewControllerDelegate {
 }
 
 
-class PinIOViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, PinCellDelegate {
+class PinIOViewController : UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate, PinCellDelegate {
     
     private let SECTION_COUNT = 2
     private let HEADER_HEIGHT:CGFloat = 40.0
@@ -37,6 +38,14 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
     @IBOutlet var digitalPinCell : PinCell!
     @IBOutlet var helpViewController : HelpViewController!
     @IBOutlet var debugConsole : UITextView? = nil
+    
+    //in variable declarations
+    //public so BLEMainViewController can access
+    var sensorDataVal: [SensorRecord!] = [] //arlene: array for sensor data
+    private var locManager = CLLocationManager()
+    private var currentLocation: CLLocation!
+    
+
     
     
     private let invalidCellPath = NSIndexPath(forItem: -1, inSection: -1)
@@ -68,6 +77,18 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         self.title = "Pin I/O"
         self.helpViewController?.title = "Pin I/O Help"
         readReportsSent = false
+        
+        //in init(delegate:)
+        //arlene: request location authorization
+        locManager.delegate = self
+        locManager.desiredAccuracy = kCLLocationAccuracyBest
+        
+        //request permission if device is running iOS8 or higher
+        if locManager.respondsToSelector("requestWhenInUseAuthorization") {
+            locManager.requestWhenInUseAuthorization()
+        }
+        locManager.startUpdatingLocation()
+
         
 //        initializeCells()
         
@@ -644,6 +665,17 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
                         cell?.setAnalogValue(val)
                     }
                 }
+                
+                //arlene: add to sensorDataVal array
+                let someSensorRecord = SensorRecord(sensorMeasurement:val, locationInfo:currentLocation)
+                sensorDataVal.append(someSensorRecord)
+                print("someSensorRecord = \(someSensorRecord.sensorMeasurement),")
+                if ((someSensorRecord.locationInfo) != nil) {
+                    print("\(someSensorRecord.locationInfo.coordinate.latitude),")
+                    print("\(someSensorRecord.locationInfo.coordinate.longitude),")
+                    println("\(someSensorRecord.locationInfo.timestamp)")
+                }
+                else { println() }
             }
         }
     }
@@ -705,6 +737,22 @@ class PinIOViewController : UIViewController, UITableViewDataSource, UITableView
         //Save reference state mask
         portMasks[port] = UInt8(pinStates)
         
+    }
+    
+    //MARK: Location Managing (added by arlene)
+    
+    //CLLocationManagerDelegate
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var location:CLLocation = locations[locations.count-1] as CLLocation
+        
+        currentLocation = location
+        println("currentLocation = \(currentLocation)")
+        
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        print("Can't get your location: ")
+        println(error)
     }
     
     

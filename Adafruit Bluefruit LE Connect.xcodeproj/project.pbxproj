@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CAF591D01AAF71B900C74CFE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF591CF1AAF71B900C74CFE /* CoreLocation.framework */; };
+		CAF591D41AAF736700C74CFE /* SensorRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF591D31AAF736700C74CFE /* SensorRecord.swift */; };
 		F007EDBA1A3064B60023FCD6 /* ControllerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F007EDB91A3064B60023FCD6 /* ControllerViewController_iPad.xib */; };
 		F007EDC31A3191BC0023FCD6 /* ble-arrow_button_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F007EDBB1A3191BC0023FCD6 /* ble-arrow_button_down.png */; };
 		F007EDC41A3191BC0023FCD6 /* ble-arrow_button_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F007EDBC1A3191BC0023FCD6 /* ble-arrow_button_down@2x.png */; };
@@ -107,6 +109,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CAF591CF1AAF71B900C74CFE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CAF591D31AAF736700C74CFE /* SensorRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorRecord.swift; sourceTree = "<group>"; };
 		F007EDB91A3064B60023FCD6 /* ControllerViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControllerViewController_iPad.xib; sourceTree = "<group>"; };
 		F007EDBB1A3191BC0023FCD6 /* ble-arrow_button_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-arrow_button_down.png"; sourceTree = "<group>"; };
 		F007EDBC1A3191BC0023FCD6 /* ble-arrow_button_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-arrow_button_down@2x.png"; sourceTree = "<group>"; };
@@ -216,6 +220,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF591D01AAF71B900C74CFE /* CoreLocation.framework in Frameworks */,
 				F0C47C1F16C23D67002EFADA /* QuartzCore.framework in Frameworks */,
 				F0A2C99D16BBED8F00F2FD12 /* CoreBluetooth.framework in Frameworks */,
 				F0A2C96A16BBE44500F2FD12 /* UIKit.framework in Frameworks */,
@@ -271,6 +276,7 @@
 		F0A2C96816BBE44500F2FD12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAF591CF1AAF71B900C74CFE /* CoreLocation.framework */,
 				F0C47C1E16C23D67002EFADA /* QuartzCore.framework */,
 				F0A2C99C16BBED8E00F2FD12 /* CoreBluetooth.framework */,
 				F0A2C96916BBE44500F2FD12 /* UIKit.framework */,
@@ -300,6 +306,7 @@
 				F0F9C4A819E25BF000AF2352 /* HelpViewController.swift */,
 				F0F5865C19E7C8AB0000E544 /* PinCell.swift */,
 				F08849D019E47EE6002B442A /* PinIOViewController.swift */,
+				CAF591D31AAF736700C74CFE /* SensorRecord.swift */,
 				F0A2C97016BBE44500F2FD12 /* Supporting Files */,
 				F051AAD619DA96F7009A1383 /* UARTViewController.swift */,
 				F08BFF4718A4F7E600EF43FB /* UI */,
@@ -553,6 +560,7 @@
 				F0F9C4A919E25BF000AF2352 /* HelpViewController.swift in Sources */,
 				F060841019F4CF8F0058B4E4 /* AttributeCell.swift in Sources */,
 				F0E51AD41A9D41F30074339D /* ISColorWheel.m in Sources */,
+				CAF591D41AAF736700C74CFE /* SensorRecord.swift in Sources */,
 				F07D974019FA46F200CA88CF /* DeviceInfoViewController.swift in Sources */,
 				F02F6EEB1A247F160080FFDF /* ControllerViewController.swift in Sources */,
 				F0A94FDC19DBE68800C8A37E /* Constants.swift in Sources */,
