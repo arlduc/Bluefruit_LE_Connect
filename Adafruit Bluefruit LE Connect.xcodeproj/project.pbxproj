@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CAF591D01AAF71B900C74CFE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF591CF1AAF71B900C74CFE /* CoreLocation.framework */; };
 		CAF591D41AAF736700C74CFE /* SensorRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF591D31AAF736700C74CFE /* SensorRecord.swift */; };
+		CAF591D61AAF75B400C74CFE /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CAF591D51AAF75B400C74CFE /* MessageUI.framework */; };
 		F007EDBA1A3064B60023FCD6 /* ControllerViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = F007EDB91A3064B60023FCD6 /* ControllerViewController_iPad.xib */; };
 		F007EDC31A3191BC0023FCD6 /* ble-arrow_button_down.png in Resources */ = {isa = PBXBuildFile; fileRef = F007EDBB1A3191BC0023FCD6 /* ble-arrow_button_down.png */; };
 		F007EDC41A3191BC0023FCD6 /* ble-arrow_button_down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F007EDBC1A3191BC0023FCD6 /* ble-arrow_button_down@2x.png */; };
@@ -111,6 +112,7 @@
 /* Begin PBXFileReference section */
 		CAF591CF1AAF71B900C74CFE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CAF591D31AAF736700C74CFE /* SensorRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SensorRecord.swift; sourceTree = "<group>"; };
+		CAF591D51AAF75B400C74CFE /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		F007EDB91A3064B60023FCD6 /* ControllerViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ControllerViewController_iPad.xib; sourceTree = "<group>"; };
 		F007EDBB1A3191BC0023FCD6 /* ble-arrow_button_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-arrow_button_down.png"; sourceTree = "<group>"; };
 		F007EDBC1A3191BC0023FCD6 /* ble-arrow_button_down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ble-arrow_button_down@2x.png"; sourceTree = "<group>"; };
@@ -220,6 +222,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAF591D61AAF75B400C74CFE /* MessageUI.framework in Frameworks */,
 				CAF591D01AAF71B900C74CFE /* CoreLocation.framework in Frameworks */,
 				F0C47C1F16C23D67002EFADA /* QuartzCore.framework in Frameworks */,
 				F0A2C99D16BBED8F00F2FD12 /* CoreBluetooth.framework in Frameworks */,
@@ -276,6 +279,7 @@
 		F0A2C96816BBE44500F2FD12 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CAF591D51AAF75B400C74CFE /* MessageUI.framework */,
 				CAF591CF1AAF71B900C74CFE /* CoreLocation.framework */,
 				F0C47C1E16C23D67002EFADA /* QuartzCore.framework */,
 				F0A2C99C16BBED8E00F2FD12 /* CoreBluetooth.framework */,

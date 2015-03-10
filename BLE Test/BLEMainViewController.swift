@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreBluetooth
+import MessageUI
 
 enum ConnectionMode:Int {
     case PinIO
@@ -19,8 +20,8 @@ enum ConnectionMode:Int {
 }
 
 class BLEMainViewController : UIViewController, UINavigationControllerDelegate, HelpViewControllerDelegate, CBCentralManagerDelegate,
-                              BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, UIAlertViewDelegate,
-                              DeviceListViewControllerDelegate {
+    BLEPeripheralDelegate, UARTViewControllerDelegate, PinIOViewControllerDelegate, UIAlertViewDelegate,
+DeviceListViewControllerDelegate, MFMailComposeViewControllerDelegate { //arlene: add MFMailComposeViewControllerDelegate
 
     
     
@@ -55,6 +56,10 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
     private let cbcmQueue = dispatch_queue_create("com.adafruit.bluefruitconnect.cbcmqueue", DISPATCH_QUEUE_CONCURRENT)
     private let connectionTimeOutIntvl:NSTimeInterval = 30.0
     private var connectionTimer:NSTimer?
+    
+    //array for geo-timestamped sensor data
+    private var previousSensorDataVal: [SensorRecord!] = []
+
     
     
     //MARK: View Lifecycle
@@ -506,9 +511,49 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
                 }
             }
             
-            // Returning from Pin I/O
+                //in navigationController(
+                // Returning from Pin I/O
             else if connectionMode == ConnectionMode.PinIO {
                 if connectionStatus == ConnectionStatus.Connected {
+                    println("returning from PinIO ")
+                    
+                    //arlene: load pinIoViewController's data into previousSensorDataVal
+                    previousSensorDataVal.removeAll()
+                    for index in pinIoViewController.sensorDataVal{
+                        let tempLocation : SensorRecord = index
+                        previousSensorDataVal.append(tempLocation)
+                    }
+                    
+                    //arlene: alert to send email
+                    let alertController = UIAlertController(title: "Email Data", message: "Do you want to email the analog sensor data?", preferredStyle: .ActionSheet)
+                    
+                    /*
+                    //leave out cancelAction for now.
+                    let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+                    // ...
+                    }
+                    alertController.addAction(cancelAction)*/
+                    
+                    let OKAction = UIAlertAction(title: "Yes", style: .Default) { (action) in
+                        //send email
+                        let mailComposeViewController = self.configuredMailComposeViewController()
+                        if MFMailComposeViewController.canSendMail() {
+                            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+                        } else {
+                            self.showSendMailErrorAlert()
+                        }
+                    }
+                    alertController.addAction(OKAction)
+                    
+                    let destroyAction = UIAlertAction(title: "No", style: .Destructive) { (action) in
+                        println(action)
+                    }
+                    alertController.addAction(destroyAction)
+                    
+                    self.presentViewController(alertController, animated: true) {
+                        // ... do nothing for now
+                    }
+                    
                     disconnect()
                 }
             }
@@ -535,6 +580,48 @@ class BLEMainViewController : UIViewController, UINavigationControllerDelegate, 
         else {
             navController.setToolbarHidden(true, animated: false)
         }
+    }
+    
+    
+    //MARK: 3 new email methods
+    
+    //arlene: email some stuff!
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients(["arlduc@nyu.edu"])
+        
+        //dump previousSensorDataVal into a string
+        var message = ""
+        for index in previousSensorDataVal{
+            let tempLocation : SensorRecord = index
+            message += ("\(tempLocation.sensorMeasurement),")
+            
+            if ((tempLocation.locationInfo) != nil) {
+                message += ("\(tempLocation.locationInfo.coordinate.latitude),")
+                message += ("\(tempLocation.locationInfo.coordinate.longitude),")
+                message += ("\(tempLocation.locationInfo.timestamp)\n")
+            }
+            else { message += ("\n") }
+            
+        }
+        
+        mailComposerVC.setSubject("Sending you sensor data")
+        mailComposerVC.setMessageBody(message, isHTML: false)
+        
+        return mailComposerVC
+    }
+    
+    //arlene: error with email
+    func showSendMailErrorAlert() {
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
+    }
+    
+    // arlene: MFMailComposeViewControllerDelegate Method
+    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     
