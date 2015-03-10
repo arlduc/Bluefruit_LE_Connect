@@ -14,6 +14,8 @@ In progress!
 Adafruit invests time and resources providing this open source code, please support Adafruit and open-source hardware by purchasing products from Adafruit!
 
 
+
+
 Version 1.5.1 (new geo-timestamp features)
 
 =================
